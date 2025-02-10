@@ -3,34 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New one</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Love Message</title>
+    <link rel="stylesheet" href="letter.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery -->
 </head>
-
 <body>
-    <section>
-        <p>Tap To Reveal Secret Code</p>
-        <ul class="code">
-          <li tabindex="0" class="digit">
-            <span>I</span>
-          </li>
-          <li tabindex="0" class="digit">
-            <span>L</span>
-          </li>
-          <li tabindex="0" class="digit">
-            <span>O</span>
-          </li>
-          <li tabindex="0" class="digit">
-            <span>V</span>
-          </li>
-          <li tabindex="0" class="digit">
-            <span>E</span>
-          </li>
-          <li tabindex="0" class="digit">
-            <span>U</span>
-          </li>
-        </ul>
-      </section>
-    
+    <div class="container">
+        <label>
+            <div class="heart">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/Love_Heart_SVG.svg">
+            </div>
+            <input id="messageState" type="checkbox" style="display:none"/>
+        </label>
+        <div class="message">
+            <h1>Hi, my love</h1>
+            <p><audio src="Ohyeah.mp3" autoplay loop>
+                Audio Tag is not Supported
+            </audio></p>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#messageState").on("change", function() {
+                $(".message").removeClass("openNor closeNor");
+                if ($("#messageState").is(":checked")) {
+                    $(".message").removeClass("closed no-anim").addClass("openNor");
+                    $(".heart").removeClass("closeHer openedHer").addClass("openHer");
+                    $(".container").stop().animate({"backgroundColor": "#f48fb1"}, 2000);
+                    console.log("Opening");
+                } else {
+                    $(".message").removeClass("no-anim").addClass("closeNor");
+                    $(".heart").removeClass("openHer openedHer").addClass("closeHer");
+                    $(".container").stop().animate({"backgroundColor": "#fce4ec"}, 2000);
+                    console.log("Closing");
+                }
+            });
+
+            $(".message").on("animationend", function() {
+                console.log("Animation End");
+                if ($(".message").hasClass("closeNor"))
+                    $(".message").addClass("closed");
+                $(".message").removeClass("openNor closeNor").addClass("no-anim");
+            });
+
+            $(".heart").on("animationend", function() {
+                console.log("Animation End");
+                if (!$(".heart").hasClass("closeHer"))
+                    $(".heart").addClass("openedHer beating");
+                else
+                    $(".heart").addClass("no-anim").removeClass("beating");
+                $(".heart").removeClass("openHer closeHer");
+            });
+        });
+    </script>
 </body>
 </html>
